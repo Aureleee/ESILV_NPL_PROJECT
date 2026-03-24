@@ -1,8 +1,18 @@
-ipykernel
-numpy
-matplotlib
-scikit-learn         
-pandas
-transformers
-torch
-ipywidgets
+# Core
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+matplotlib==3.8.4
+
+# Jupyter / VS Code
+ipykernel==6.29.5
+ipywidgets==8.1.2
+
+# NLP (stable)
+transformers==4.41.2
+torch>=2.1
+sentencepiece==0.2.0
+
+# HuggingFace (download stable)
+huggingface_hub
+hf_transfer
