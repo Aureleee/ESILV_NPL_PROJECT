@@ -16,4 +16,3 @@ sentencepiece==0.2.0
 # HuggingFace (download stable)
 huggingface_hub
 hf_transfer
-accelerate
