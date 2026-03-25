@@ -34,15 +34,11 @@ def clean_text(text):
     
     return text
 
-STOPWORDS = {"the", "and", "is", "to", "of", "in", "a", "for", "on", "with"}
-
 def tokenize(text):
     tokens = text.split()
     
-    tokens = [
-        word for word in tokens
-        if word not in STOPWORDS and len(word) > 2
-    ]
+    # remove very short words
+    tokens = [word for word in tokens if len(word) > 2]
     
     return tokens
 

@@ -34,17 +34,8 @@ def clean_text(text):
     
     return text
 
-STOPWORDS = {"the", "and", "is", "to", "of", "in", "a", "for", "on", "with"}
-
 def tokenize(text):
-    tokens = text.split()
-    
-    tokens = [
-        word for word in tokens
-        if word not in STOPWORDS and len(word) > 2
-    ]
-    
-    return tokens
+    return text.split()
 
 def generate_ngrams(tokens, n):
     return zip(*[tokens[i:] for i in range(n)])
@@ -122,3 +113,8 @@ def train_lda_model(corpus, dictionary, num_topics=5, passes=10):
     return lda_model
 
 
+def extract_topics(lda_model, num_words=10):
+    """
+    Extract topics in readable format
+    """
+    return lda_model.print_topics(num_words=num_words)

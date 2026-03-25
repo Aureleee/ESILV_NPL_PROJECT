@@ -34,17 +34,8 @@ def clean_text(text):
     
     return text
 
-STOPWORDS = {"the", "and", "is", "to", "of", "in", "a", "for", "on", "with"}
-
 def tokenize(text):
-    tokens = text.split()
-    
-    tokens = [
-        word for word in tokens
-        if word not in STOPWORDS and len(word) > 2
-    ]
-    
-    return tokens
+    return text.split()
 
 def generate_ngrams(tokens, n):
     return zip(*[tokens[i:] for i in range(n)])
@@ -122,3 +113,58 @@ def train_lda_model(corpus, dictionary, num_topics=5, passes=10):
     return lda_model
 
 
+# =========================
+# TOPIC MODELING (LDA)
+# =========================
+
+from gensim import corpora
+from gensim.models import LdaModel
+
+
+def prepare_texts_for_lda(texts):
+    """
+    Clean + tokenize all texts
+    """
+    texts_clean = []
+    
+    for text in texts:
+        cleaned = clean_text(text)
+        tokens = tokenize(cleaned)
+        texts_clean.append(tokens)
+    
+    return texts_clean
+
+
+def build_dictionary(texts_clean):
+    """
+    Create word dictionary (word → id)
+    """
+    return corpora.Dictionary(texts_clean)
+
+
+def build_corpus(texts_clean, dictionary):
+    """
+    Convert texts into Bag-of-Words format
+    """
+    return [dictionary.doc2bow(text) for text in texts_clean]
+
+
+def train_lda_model(corpus, dictionary, num_topics=5, passes=10):
+    """
+    Train LDA model
+    """
+    lda_model = LdaModel(
+        corpus=corpus,
+        id2word=dictionary,
+        num_topics=num_topics,
+        passes=passes
+    )
+    
+    return lda_model
+
+
+def extract_topics(lda_model, num_words=10):
+    """
+    Extract topics in readable format
+    """
+    return lda_model.print_topics(num_words=num_words)
